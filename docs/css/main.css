@@ -1,0 +1,258 @@
+/* CSS Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #000000;
+    color: #E1E1E1;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* Typography System */
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+}
+
+h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 36px;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 30px;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+}
+
+p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #E1E1E1;
+    margin-bottom: 16px;
+}
+
+/* Layout Container */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: #000000;
+    border-right: 1px solid #333333;
+    z-index: 1000;
+}
+
+.logo {
+    padding: 24px;
+    border-bottom: 1px solid #333333;
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-item {
+    border-bottom: 1px solid #1A1A1A;
+}
+
+.nav-link {
+    display: block;
+    padding: 0 24px;
+    line-height: 40px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+.nav-link:hover {
+    background-color: #111111;
+    color: #6B7A8F;
+}
+
+.nav-link.active {
+    color: #6B7A8F;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+}
+
+/* Section Styling */
+.section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-out;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-content {
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Button Styles */
+.btn-primary {
+    display: inline-block;
+    background-color: #6B7A8F;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin-right: 16px;
+    margin-bottom: 16px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    background-color: transparent;
+    color: #6B7A8F;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 12px 24px;
+    border: 1px solid #6B7A8F;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin-right: 16px;
+    margin-bottom: 16px;
+}
+
+/* Feature Grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+}
+
+.feature-card {
+    background-color: #1A1A1A;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 32px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Team Grid */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 1001;
+    background: #1A1A1A;
+    border: 1px solid #333333;
+    color: #FFFFFF;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 1199px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .section {
+        padding: 16px;
+    }
+    
+    h1 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    
+    h2 {
+        font-size: 24px;
+        line-height: 32px;
+    }
+    
+    .feature-grid,
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+} 

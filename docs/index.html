@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGM Test-Rig Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
+        ☰
+    </button>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar" aria-label="Sidebar Navigation">
+            <div class="logo">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="6" fill="#6B7A8F"/>
+                    <path d="M8 12h16v8H8z" fill="#FFFFFF"/>
+                    <circle cx="20" cy="12" r="3" fill="#6B7A8F"/>
+                </svg>
+            </div>
+            <ul class="nav-menu">
+                <!-- Navigation items will be dynamically inserted here -->
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Section 1: Project Background -->
+            <section id="background" class="section visible">
+                <div class="section-content">
+                    <!-- Content will be dynamically inserted here -->
+                </div>
+            </section>
+
+            <!-- Section 2: Core Features -->
+            <section id="features" class="section">
+                <div class="section-content">
+                    <h2>Core Features & Capabilities</h2>
+                    <p>Our comprehensive testing platform delivers laboratory-grade precision with intuitive operation, enabling faster development cycles and more reliable sensor validation.</p>
+                    
+                    <div class="demo-video">
+                        📹 Interactive Demo Video<br>
+                        <small style="color: #666666;">Real-time sensor calibration process</small>
+                    </div>
+
+                    <div class="feature-grid">
+                        <!-- Features will be dynamically inserted here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Technical Resources -->
+            <section id="resources" class="section">
+                <div class="section-content">
+                    <h2>Technical Resources & Documentation</h2>
+                    <p>Access comprehensive technical documentation, source code, and implementation guides to integrate our CGM test-rig into your development workflow or customize it for specific research applications.</p>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h3>📚 Technical Specifications</h3>
+                            <p>Complete hardware specifications, calibration procedures, and performance validation protocols with detailed measurement uncertainties.</p>
+                            <a href="#" class="btn-primary">Download PDF</a>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🔧 Source Code Repository</h3>
+                            <p>Open-source firmware and control software with comprehensive API documentation and example implementations.</p>
+                            <a href="#" class="btn-primary">View on GitHub</a>
+                        </div>
+                        <div class="feature-card">
+                            <h3>🎯 Quick Start Guide</h3>
+                            <p>Step-by-step setup instructions, initial calibration procedures, and common troubleshooting solutions for rapid deployment.</p>
+                            <a href="#" class="btn-secondary">Read Guide</a>
+                        </div>
+                        <div class="feature-card">
+                            <h3>📊 Sample Data Sets</h3>
+                            <p>Validated reference data sets for testing algorithm performance and benchmarking your own implementations.</p>
+                            <a href="#" class="btn-secondary">Download Data</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: About Us -->
+            <section id="about" class="section">
+                <div class="section-content">
+                    <h2>About Our Team</h2>
+                    <p>A multidisciplinary team of biomedical engineers, software developers, and clinical researchers dedicated to advancing diabetes care through innovative measurement technologies.</p>
+                    
+                    <div class="team-grid">
+                        <!-- Team members will be dynamically inserted here -->
+                    </div>
+
+                    <div style="margin-top: 48px; text-align: center;">
+                        <h3>Get In Touch</h3>
+                        <p>Ready to integrate our CGM test-rig into your research or development process? We'd love to discuss how our platform can accelerate your glucose monitoring innovations.</p>
+                        <div style="margin-top: 24px;">
+                            <a href="mailto:contact@cgm-testrig.com" class="btn-primary">Contact Us</a>
+                            <a href="#" class="btn-secondary">Schedule Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <div class="progress-dot active" data-section="background"></div>
+            <div class="progress-dot" data-section="features"></div>
+            <div class="progress-dot" data-section="resources"></div>
+            <div class="progress-dot" data-section="about"></div>
+        </div>
+    </div>
+
+    <script src="js/content.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 
