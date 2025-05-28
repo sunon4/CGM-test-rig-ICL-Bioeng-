@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGM Monitor - Write</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>CGM Monitor</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Read</a></li>
+                <li><a href="write.html" class="active">Write</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container write-container">
+            <h2>Glucose Concentration Profile</h2>
+            
+            <div class="controls">
+                <div class="select-group">
+                    <label for="cgm-select">CGM Device:</label>
+                    <select id="cgm-select">
+                        <option value="Freestyle Libre 2">Freestyle Libre 2</option>
+                        <option value="Dexcom g7">Dexcom g7</option>
+                        <option value="Medtronic Guardian Connect">Medtronic Guardian Connect</option>
+                    </select>
+                </div>
+                
+                <div class="button-group">
+                    <button id="start-btn" class="action-btn start-btn">Start Writing</button>
+                    <button id="stop-btn" class="action-btn stop-btn" disabled>Stop Process</button>
+                </div>
+            </div>
+            
+            <div class="content-wrapper">
+                <div class="input-methods">
+                    <div class="method-tab active" id="manual-tab">
+                        <h3>Manual Input</h3>
+                        <div class="method-content">
+                            <p>Enter glucose values manually</p>
+                            <!-- Placeholder for manual input controls -->
+                        </div>
+                    </div>
+                    
+                    <div class="method-tab" id="simulator-tab">
+                        <h3>Simulator</h3>
+                        <div class="method-content">
+                            <p>Use simulator to generate values</p>
+                            <!-- Placeholder for simulator controls -->
+                        </div>
+                    </div>
+                    
+                    <div class="method-tab" id="upload-tab">
+                        <h3>Upload Data</h3>
+                        <div class="method-content">
+                            <p>Upload your own data file</p>
+                            <!-- Placeholder for file upload -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preview-container">
+                    <h3>Profile Preview</h3>
+                    <div class="chart-container">
+                        <canvas id="previewChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 CGM Monitor</p>
+    </footer>
+    
+    <script src="js/write.js"></script>
+</body>
+</html> 

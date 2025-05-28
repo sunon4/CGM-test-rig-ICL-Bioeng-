@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGM Monitor - Read</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>CGM Monitor</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Read</a></li>
+                <li><a href="write.html">Write</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Sensor Readings</h2>
+            
+            <div class="controls">
+                <div class="select-group">
+                    <label for="time-select">Time Period:</label>
+                    <select id="time-select">
+                        <option value="current">Current</option>
+                        <option value="last-hour">Last Hour</option>
+                        <option value="last-day">Last 24 Hours</option>
+                        <option value="last-week">Last Week</option>
+                    </select>
+                </div>
+                
+                <div class="select-group">
+                    <label for="cgm-select">CGM Device:</label>
+                    <select id="cgm-select">
+                        <option value="Freestyle Libre 2">Freestyle Libre 2</option>
+                        <option value="Dexcom g7">Dexcom g7</option>
+                        <option value="Medtronic Guardian Connect">Medtronic Guardian Connect</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="glucoseChart"></canvas>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 CGM Monitor</p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html> 
