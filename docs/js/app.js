@@ -103,12 +103,11 @@ class AppManager {
 
 class NavigationManager {
     constructor() {
-        this.currentSection = 'background';
-        this.sections = document.querySelectorAll('.section');
+        this.currentSection = 'hero';
+        this.sections = document.querySelectorAll('section');
         this.navLinks = document.querySelectorAll('.nav-link');
-        this.progressDots = document.querySelectorAll('.progress-dot');
-        this.sidebar = document.getElementById('sidebar');
-        this.mobileToggle = document.getElementById('mobileMenuToggle');
+        this.navToggle = document.querySelector('.nav-toggle');
+        this.navContainer = document.querySelector('.nav-container');
         
         this.initializeEventListeners();
         this.initializeIntersectionObserver();
@@ -119,38 +118,35 @@ class NavigationManager {
         this.navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetSection = link.getAttribute('data-section');
+                const targetSection = link.getAttribute('href').substring(1);
                 this.navigateToSection(targetSection);
-            });
-        });
-
-        // Progress dot click handlers
-        this.progressDots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const targetSection = dot.getAttribute('data-section');
-                this.navigateToSection(targetSection);
+                // Close nav on mobile after clicking
+                if (window.innerWidth < 768) {
+                    this.navContainer.classList.remove('nav-open');
+                }
             });
         });
 
         // Mobile menu toggle
-        this.mobileToggle?.addEventListener('click', () => {
-            this.sidebar.classList.toggle('open');
-        });
+        if (this.navToggle) {
+            this.navToggle.addEventListener('click', () => {
+                this.navContainer.classList.toggle('nav-open');
+            });
+        }
 
-        // Close sidebar on mobile when clicking outside
+        // Close navigation when clicking outside
         document.addEventListener('click', (e) => {
-            if (window.innerWidth < 1200 && 
-                !this.sidebar.contains(e.target) && 
-                !this.mobileToggle.contains(e.target)) {
-                this.sidebar.classList.remove('open');
+            if (window.innerWidth < 768 && 
+                !this.navContainer.contains(e.target) && 
+                !this.navToggle.contains(e.target)) {
+                this.navContainer.classList.remove('nav-open');
             }
         });
 
         // Keyboard navigation support
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                e.preventDefault();
-                this.handleKeyboardNavigation(e.key);
+            if (e.key === 'Escape') {
+                this.navContainer.classList.remove('nav-open');
             }
         });
     }
@@ -165,9 +161,9 @@ class NavigationManager {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
                     const sectionId = entry.target.id;
                     this.updateActiveNavigation(sectionId);
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
@@ -184,10 +180,6 @@ class NavigationManager {
                 behavior: 'smooth',
                 block: 'start'
             });
-            
-            if (window.innerWidth < 1200) {
-                this.sidebar.classList.remove('open');
-            }
         }
     }
 
@@ -195,34 +187,9 @@ class NavigationManager {
         this.currentSection = sectionId;
         
         this.navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('data-section') === sectionId) {
-                link.classList.add('active');
-            }
+            const href = link.getAttribute('href').substring(1);
+            link.classList.toggle('active', href === sectionId);
         });
-
-        this.progressDots.forEach(dot => {
-            dot.classList.remove('active');
-            if (dot.getAttribute('data-section') === sectionId) {
-                dot.classList.add('active');
-            }
-        });
-    }
-
-    handleKeyboardNavigation(key) {
-        const sectionIds = ['background', 'features', 'resources', 'about'];
-        const currentIndex = sectionIds.indexOf(this.currentSection);
-        
-        let newIndex;
-        if (key === 'ArrowDown') {
-            newIndex = Math.min(currentIndex + 1, sectionIds.length - 1);
-        } else {
-            newIndex = Math.max(currentIndex - 1, 0);
-        }
-        
-        if (newIndex !== currentIndex) {
-            this.navigateToSection(sectionIds[newIndex]);
-        }
     }
 }
 

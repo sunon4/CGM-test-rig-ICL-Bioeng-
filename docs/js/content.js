@@ -11,19 +11,14 @@ const siteContent = {
     `,
     resources: [
         {
-            title: 'Technical Documentation',
-            description: 'Comprehensive guides and specifications for implementation.',
-            link: '#'
+            title: 'Report',
+            description: 'Complete technical mechanism and implementation guides',
+            link: 'docs/assets/star_Group_15___DAPP_3_Project_Report_version_2_compressed.pdf'
         },
         {
-            title: 'API Reference',
-            description: 'Detailed documentation of all available endpoints and methods.',
-            link: '#'
-        },
-        {
-            title: 'Example Code',
-            description: 'Sample implementations and integration examples.',
-            link: '#'
+            title: 'Github repo',
+            description: 'code and solidwork model',
+            link: 'https://sunon4.github.io/CGM-test-rig-ICL-Bioeng-/'
         }
     ]
 };
