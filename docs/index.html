@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="docs/assets/integrated_system.PNG" alt="CGM Test-Rig Platform" class="main-hero-image">
+                    <img src="assets/integrated_system.PNG" alt="CGM Test-Rig Platform" class="main-hero-image">
                 </div>
             </div>
         </div>
@@ -58,28 +58,35 @@
     <section id="gallery" class="section">
         <div class="section-content animate-in">
             <h2>Innovation in Action</h2>
-            <p>Explore our cutting-edge testing environment and see how we're advancing diabetes care technology</p>
+            <p>Explore our 3D models of the CGM test-rig components</p>
             
             <div class="gallery-grid">
                 <div class="gallery-item animate-in">
-                    <img src="images/lab-setup.jpg" alt="Advanced laboratory setup">
+                    <div class="stl-viewer" id="stl-viewer-1"></div>
                     <div class="gallery-item-overlay">
-                        <h3>State-of-the-art Testing Environment</h3>
-                        <p>Precision-controlled conditions for accurate sensor validation</p>
+                        <h3>Stepwise Mixer</h3>
+                        <p>Circular cross-section design for optimal mixing performance</p>
                     </div>
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="images/data-visualization.jpg" alt="Real-time data visualization">
+                    <div class="stl-viewer" id="stl-viewer-2"></div>
                     <div class="gallery-item-overlay">
-                        <h3>Advanced Analytics Dashboard</h3>
-                        <p>Comprehensive data visualization and analysis tools</p>
+                        <h3>Passive Mixer Assembly</h3>
+                        <p>Complete mixer assembly with attachments</p>
                     </div>
                 </div>
                 <div class="gallery-item animate-in">
-                    <img src="images/sensor-testing.jpg" alt="Sensor testing process">
+                    <div class="stl-viewer" id="stl-viewer-3"></div>
                     <div class="gallery-item-overlay">
-                        <h3>Automated Testing Process</h3>
-                        <p>Streamlined validation procedures for rapid development</p>
+                        <h3>Sinusoidal Mixer</h3>
+                        <p>Advanced sinusoidal design for enhanced mixing efficiency</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate-in">
+                    <div class="stl-viewer" id="stl-viewer-4"></div>
+                    <div class="gallery-item-overlay">
+                        <h3>Sensor Interface</h3>
+                        <p>Integrated housing with seal for precise sensor placement</p>
                     </div>
                 </div>
             </div>
@@ -166,6 +173,13 @@
         </div>
     </footer>
 
+    <!-- Add Three.js scripts before the closing body tag -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="js/stl-viewer.js"></script>
+
+    <!-- Rest of your existing scripts -->
     <script src="js/content.js"></script>
     <script src="js/app.js"></script>
 </body>
