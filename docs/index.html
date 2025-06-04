@@ -10,89 +10,158 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
-        ☰
-    </button>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar" id="sidebar" aria-label="Sidebar Navigation">
-            <div class="logo">
+    <!-- Navigation -->
+    <nav class="nav-container" role="navigation">
+        <div class="nav-content">
+            <div class="nav-logo">
                 <img src="assets/logo.svg" alt="Project logo" width="32" height="32">
-            </div>              
-            <ul class="nav-menu">
-                <!-- Navigation items will be dynamically inserted here -->
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#resources" class="nav-link">Resources</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Section 1: Project Background -->
-            <section id="background" class="section visible">
-                <div class="section-content">
-                    <!-- Content will be dynamically inserted here -->
-                </div>
-            </section>
-
-            <!-- Section 3: Technical Resources -->
-            <section id="resources" class="section">
-                <div class="section-content">
-                    <h2>Technical Resources & Documentation</h2>
-                    <p>Access comprehensive technical documentation, source code, and implementation guides to integrate our CGM test-rig into your development workflow or customize it for specific research applications.</p>
-                    
-                    <div class="feature-grid">
-                        <div class="feature-card">
-                            <h3>📚 Technical Specifications</h3>
-                            <p>Complete hardware specifications, calibration procedures, and performance validation protocols with detailed measurement uncertainties.</p>
-                            <a href="#" class="btn-primary">Download PDF</a>
-                        </div>
-                        <div class="feature-card">
-                            <h3>🔧 Source Code Repository</h3>
-                            <p>Open-source firmware and control software with comprehensive API documentation and example implementations.</p>
-                            <a href="#" class="btn-primary">View on GitHub</a>
-                        </div>
-                        <div class="feature-card">
-                            <h3>🎯 Quick Start Guide</h3>
-                            <p>Step-by-step setup instructions, initial calibration procedures, and common troubleshooting solutions for rapid deployment.</p>
-                            <a href="#" class="btn-secondary">Read Guide</a>
-                        </div>
-                        <div class="feature-card">
-                            <h3>📊 Sample Data Sets</h3>
-                            <p>Validated reference data sets for testing algorithm performance and benchmarking your own implementations.</p>
-                            <a href="#" class="btn-secondary">Download Data</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 4: About Us -->
-            <section id="about" class="section">
-                <div class="section-content">
-                    <h2>About Our Team</h2>
-                    <p>A multidisciplinary team of biomedical engineers, software developers, and researchers dedicated to advancing diabetes care through innovative sensor testing technologies.</p>
-                
-
-                    <div style="margin-top: 48px; text-align: center;">
-                        <h3>Get In Touch</h3>
-                        <p>Ready to integrate our CGM test-rig into your research or development process? We'd love to discuss how our platform can accelerate your glucose monitoring innovations.</p>
-                        <div style="margin-top: 24px;">
-                            <a href="mailto:contact@cgm-testrig.com" class="btn-primary">Contact Us</a>
-                            <a href="#" class="btn-secondary">Schedule Demo</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Progress Indicator -->
-        <div class="progress-indicator">
-            <div class="progress-dot active" data-section="background"></div>
-            <div class="progress-dot" data-section="features"></div>
-            <div class="progress-dot" data-section="resources"></div>
-            <div class="progress-dot" data-section="about"></div>
         </div>
-    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-content animate-in">
+            <h1>Advanced CGM Test-Rig Platform</h1>
+            <p class="hero-subtitle">Empowering diabetes care innovation through precise sensor validation and rapid development cycles</p>
+            <div class="hero-cta">
+                <a href="#gallery" class="btn btn-primary">Explore Gallery</a>
+                <a href="#contact" class="btn btn-secondary">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section">
+        <div class="section-content animate-in">
+            <h2>Innovation in Action</h2>
+            <p>Explore our cutting-edge testing environment and see how we're advancing diabetes care technology</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item animate-in">
+                    <img src="images/lab-setup.jpg" alt="Advanced laboratory setup">
+                    <div class="gallery-item-overlay">
+                        <h3>State-of-the-art Testing Environment</h3>
+                        <p>Precision-controlled conditions for accurate sensor validation</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate-in">
+                    <img src="images/data-visualization.jpg" alt="Real-time data visualization">
+                    <div class="gallery-item-overlay">
+                        <h3>Advanced Analytics Dashboard</h3>
+                        <p>Comprehensive data visualization and analysis tools</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate-in">
+                    <img src="images/sensor-testing.jpg" alt="Sensor testing process">
+                    <div class="gallery-item-overlay">
+                        <h3>Automated Testing Process</h3>
+                        <p>Streamlined validation procedures for rapid development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="section">
+        <div class="section-content animate-in">
+            <h2>Technical Resources</h2>
+            <p>Access comprehensive documentation and tools to integrate our platform into your workflow</p>
+            
+            <div class="resource-grid">
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">📚</div>
+                    <h3>Documentation</h3>
+                    <p>Complete technical specifications and implementation guides</p>
+                    <a href="#" class="btn btn-secondary">View Docs</a>
+                </div>
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">💻</div>
+                    <h3>API Reference</h3>
+                    <p>Detailed API documentation and code examples</p>
+                    <a href="#" class="btn btn-secondary">Explore API</a>
+                </div>
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Tutorials</h3>
+                    <p>Step-by-step guides and video tutorials</p>
+                    <a href="#" class="btn btn-secondary">Start Learning</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="section-content animate-in">
+            <h2>Get Started Today</h2>
+            <p>Ready to accelerate your CGM development? Let's discuss how our platform can help.</p>
+            
+            <div class="contact-container">
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/logo.svg" alt="Project logo" width="32" height="32">
+            </div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#resources">Resources</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#privacy">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 CGM Test-Rig. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="js/content.js"></script>
     <script src="js/app.js"></script>

@@ -1,12 +1,13 @@
-const content = {
+const siteContent = {
     navigation: [
-        { id: 'background', label: 'Background', active: true },
+        { id: 'hero', label: 'Home', active: true },
+        { id: 'gallery', label: 'Gallery', active: false },
         { id: 'resources', label: 'Resources', active: false },
-        { id: 'about', label: 'About', active: false }
+        { id: 'contact', label: 'Contact', active: false }
     ],
     background: `
         <h2>Advancing CGM Technology</h2>
-        <p>Our test-rig platform represents a significant leap forward in continuous glucose monitoring (CGM) sensor validation and development...</p>
+        <p>Our test-rig platform represents a significant leap forward in continuous glucose monitoring (CGM) sensor validation and development. We combine precision engineering with intuitive design to accelerate your development process.</p>
     `,
     resources: [
         {
@@ -24,22 +25,8 @@ const content = {
             description: 'Sample implementations and integration examples.',
             link: '#'
         }
-    ],
-    team: [
-        {
-            name: 'Dr. Sarah Chen',
-            role: 'Lead Researcher',
-            bio: 'Expert in biosensor development with 10+ years experience.'
-        },
-        {
-            name: 'Michael Rodriguez',
-            role: 'Senior Engineer',
-            bio: 'Specializes in precision instrumentation and calibration systems.'
-        },
-        {
-            name: 'Dr. James Wilson',
-            role: 'Clinical Advisor',
-            bio: 'Practicing endocrinologist with research focus in diabetes technology.'
-        }
     ]
-}; 
+};
+
+// Make content available globally
+window.siteContent = siteContent; 
