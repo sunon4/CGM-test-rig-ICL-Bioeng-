@@ -176,10 +176,15 @@ class NavigationManager {
     navigateToSection(sectionId) {
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
-            targetSection.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
+            // Add a small delay to ensure proper scrolling
+            setTimeout(() => {
+                const navHeight = document.querySelector('.nav-container').offsetHeight;
+                const targetPosition = targetSection.offsetTop - navHeight;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }, 100);
         }
     }
 

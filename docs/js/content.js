@@ -13,12 +13,12 @@ const siteContent = {
         {
             title: 'Report',
             description: 'Complete technical mechanism and implementation guides',
-            link: 'docs/assets/star_Group_15___DAPP_3_Project_Report_version_2_compressed.pdf'
+            link: 'assets/star_Group_15___DAPP_3_Project_Report_version_2_compressed.pdf'
         },
         {
             title: 'Github repo',
             description: 'code and solidwork model',
-            link: 'https://sunon4.github.io/CGM-test-rig-ICL-Bioeng-/'
+            link: 'https://github.com/sunon4/CGM-test-rig-ICL-Bioeng-'
         }
     ]
 };
