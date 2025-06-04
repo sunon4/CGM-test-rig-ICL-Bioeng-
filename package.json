@@ -1,0 +1,11 @@
+{
+  "name": "cgm-web2",
+  "version": "1.0.0",
+  "description": "CGM Web Platform",
+  "scripts": {
+    "convert-logo": "node scripts/convert-svg-to-png.js"
+  },
+  "dependencies": {
+    "convert-svg-to-png": "^0.6.4"
+  }
+} 
