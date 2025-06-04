@@ -176,25 +176,39 @@ class NavigationManager {
     navigateToSection(sectionId) {
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
-            // Add a small delay to ensure proper scrolling
-            setTimeout(() => {
-                const navHeight = document.querySelector('.nav-container').offsetHeight;
-                const targetPosition = targetSection.offsetTop - navHeight;
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }, 100);
+            // Get the height of the fixed navigation
+            const navHeight = document.querySelector('.nav-container').offsetHeight;
+            
+            // Calculate the target position
+            const targetPosition = targetSection.offsetTop - navHeight;
+            
+            // Smooth scroll to the target
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            // Update active state in navigation
+            this.updateActiveNavigation(sectionId);
+            
+            // Close mobile menu if open
+            if (window.innerWidth < 768) {
+                document.querySelector('.nav-container').classList.remove('nav-open');
+            }
         }
     }
 
     updateActiveNavigation(sectionId) {
-        this.currentSection = sectionId;
-        
+        // Remove active class from all links
         this.navLinks.forEach(link => {
-            const href = link.getAttribute('href').substring(1);
-            link.classList.toggle('active', href === sectionId);
+            link.classList.remove('active');
         });
+        
+        // Add active class to current section link
+        const currentLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+        if (currentLink) {
+            currentLink.classList.add('active');
+        }
     }
 }
 
