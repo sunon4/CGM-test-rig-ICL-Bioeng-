@@ -9,7 +9,10 @@
 </head>
 <body>
     <header>
-        <h1>Pump Control System</h1>
+        <div class="header-content">
+            <h1>Pump Control System</h1>
+            <a href="https://by--nightscout--7d27qmsmb6h6.code.run/" target="_blank" class="cgm-link">View CGM Readings</a>
+        </div>
     </header>
 
     <main>
@@ -30,17 +33,10 @@
                                 <div class="manual-controls">
                                     <div class="pump-blocks-container">
                                         <div class="pump-block">
-                                            <h4>Pump 1</h4>
+                                            <h4>Pump 1 (Glucose)</h4>
                                             <div class="input-group">
-                                                <label for="pump1-rpm">RPM:</label>
-                                                <input type="number" id="pump1-rpm" min="0" max="150" step="1" value="0">
-                                            </div>
-                                            <div class="input-group">
-                                                <label for="pump1-direction">Direction:</label>
-                                                <select id="pump1-direction">
-                                                    <option value="clockwise">Clockwise</option>
-                                                    <option value="counterclockwise">Counter-clockwise</option>
-                                                </select>
+                                                <label for="pump1-ratio">Flow Ratio (0-1):</label>
+                                                <input type="number" id="pump1-ratio" min="0" max="1" step="0.1" value="0.5">
                                             </div>
                                             <div class="input-group">
                                                 <label for="pump1-glucose">Glucose Concentration (mM):</label>
@@ -49,17 +45,10 @@
                                         </div>
 
                                         <div class="pump-block">
-                                            <h4>Pump 2</h4>
-                                            <div class="input-group">
-                                                <label for="pump2-rpm">RPM:</label>
-                                                <input type="number" id="pump2-rpm" min="0" max="150" step="1" value="0">
-                                            </div>
-                                            <div class="input-group">
-                                                <label for="pump2-direction">Direction:</label>
-                                                <select id="pump2-direction">
-                                                    <option value="clockwise">Clockwise</option>
-                                                    <option value="counterclockwise">Counter-clockwise</option>
-                                                </select>
+                                            <h4>Pump 2 (PBS)</h4>
+                                            <div class="input-group pump2-ratio">
+                                                <label>Flow Ratio:</label>
+                                                <span id="pump2-ratio">0.5</span>
                                             </div>
                                             <div class="input-group">
                                                 <label for="pump2-glucose">Glucose Concentration (mM):</label>
@@ -156,7 +145,7 @@
     </main>
     
     <footer>
-        <p>&copy; 2024 Pump Control System</p>
+        <p>&copy; Gezicheng Guo</p>
     </footer>
     
     <script src="js/write.js"></script>

@@ -6,7 +6,7 @@
 #define v5v 13
 
 // Arrays to store received data
-int timestamps[MAX_ENTRIES];
+int timestamps[MAX_ENTRIES];  // Time in minutes
 float concentrations[MAX_ENTRIES];
 int currentIndex = 0;
 
@@ -50,7 +50,7 @@ void loop() {
     // Print received data for verification
     Serial.println(F("Received data:"));
     for (int i = 0; i < MAX_ENTRIES; i++) {
-      Serial.print(F("Time: "));
+      Serial.print(F("Time (min): "));  // Clarify units in output
       Serial.print(timestamps[i]);
       Serial.print(F(" Concentration: "));
       Serial.println(concentrations[i], 2);
@@ -91,7 +91,7 @@ bool parseReceivedData() {
     char* separator = strchr(token, ':');
     if (separator != NULL) {
       *separator = '\0';  // Split the string
-      timestamps[currentIndex] = atoi(token);  // Convert time to integer
+      timestamps[currentIndex] = atoi(token);  // Time is in minutes
       concentrations[currentIndex] = atof(separator + 1);  // Convert concentration to float
       currentIndex++;
     }
@@ -214,21 +214,20 @@ void getPumpDelays_ms(float flowRate1_mLmin, float flowRate2_mLmin, float innerD
   }
 }
 
-void runTwoPumps(int pump1_rpm, int pump2_rpm, int delay1_ms, int delay2_ms, int runTime1_ms, int runTime2_ms) {
+void runTwoPumps(int pump1_rpm, int pump2_rpm, int runTime_ms) {
   Serial.print(F("DEBUG: RPM1="));
   Serial.print(pump1_rpm);
   Serial.print(F(" RPM2="));
   Serial.println(pump2_rpm);
+  Serial.print(F("DEBUG: Run time (ms): "));  // Add run time to debug output
+  Serial.println(runTime_ms);
   
   const int stepsPerRevolution = 200;
   unsigned long interval1_us = 60000000UL / (pump1_rpm * stepsPerRevolution);
   unsigned long interval2_us = 60000000UL / (pump2_rpm * stepsPerRevolution);
   
   unsigned long startTime = millis();
-  unsigned long delayEnd1 = startTime + delay1_ms;
-  unsigned long delayEnd2 = startTime + delay2_ms;
-  unsigned long stopTime1 = delayEnd1 + runTime1_ms;
-  unsigned long stopTime2 = delayEnd2 + runTime2_ms;
+  unsigned long stopTime = startTime + runTime_ms;
   
   Serial.print(F("DEBUG: StartTime="));
   Serial.println(startTime);
@@ -243,12 +242,12 @@ void runTwoPumps(int pump1_rpm, int pump2_rpm, int delay1_ms, int delay2_ms, int
   
   Serial.println(F("DEBUG: Pumps starting..."));
 
-  while (millis() < max(stopTime1, stopTime2)) {
+  while (millis() < stopTime) {
     unsigned long now = micros();
     unsigned long now_ms = millis();
 
     // Pump 1 stepping logic
-    if (now_ms >= delayEnd1 && now_ms < stopTime1 && (now - lastStepTime1 >= interval1_us)) {
+    if (now - lastStepTime1 >= interval1_us) {
       digitalWrite(v1stepPin, HIGH);
       delayMicroseconds(10);
       digitalWrite(v1stepPin, LOW);
@@ -257,7 +256,7 @@ void runTwoPumps(int pump1_rpm, int pump2_rpm, int delay1_ms, int delay2_ms, int
     }
 
     // Pump 2 stepping logic
-    if (now_ms >= delayEnd2 && now_ms < stopTime2 && (now - lastStepTime2 >= interval2_us)) {
+    if (now - lastStepTime2 >= interval2_us) {
       digitalWrite(v2stepPin, HIGH);
       delayMicroseconds(10);
       digitalWrite(v2stepPin, LOW);
@@ -302,19 +301,22 @@ void runPumpSchedule() {
     Serial.println(targetConc);
 
     calculatePumpFlowRates_mLmin(compositeFlowRate_mLmin, targetConc, C1_mmolL, C2_mmolL);
-    Serial.print("Q1 and Q2");
+    Serial.print("Q1 and Q2: ");
     Serial.print(currentGlucoseFlowRate_mLmin);
-    Serial.print(currentPBSFlowRate_mLmin);
-
-    getPumpDelays_ms(currentGlucoseFlowRate_mLmin, currentPBSFlowRate_mLmin,
-                     channelInternalDiameter_mm, preIntersectionChannelLength_mm);
+    Serial.print(", ");
+    Serial.println(currentPBSFlowRate_mLmin);
                      
     int pump1_rpm = (int)((currentGlucoseFlowRate_mLmin+0.2537)*2/0.1185);
     int pump2_rpm = (int)((currentPBSFlowRate_mLmin+0.2537)*2/0.1185);
-    int time_run_pump1 = (timestamps[i+1] - timestamps[i])*1000;
-    int time_run_pump2 = (timestamps[i+1] - timestamps[i])*1000;
     
-    runTwoPumps(pump1_rpm, pump2_rpm, delayC1_ms, delayC2_ms, time_run_pump1, time_run_pump2);
+    // Convert time difference from minutes to milliseconds
+    long time_diff_minutes = timestamps[i+1] - timestamps[i];
+    long run_time = time_diff_minutes * 60L * 1000L;  // minutes -> seconds -> milliseconds
+    
+    Serial.print(F("DEBUG: Time step (min): "));  // Add time step debug output
+    Serial.println(time_diff_minutes);
+    
+    runTwoPumps(pump1_rpm, pump2_rpm, run_time);
 
     // Print status summary for each step with minimal formatting
     Serial.print(F("Min"));
@@ -324,11 +326,7 @@ void runPumpSchedule() {
     Serial.print(F("|GF:"));
     Serial.print(currentGlucoseFlowRate_mLmin);
     Serial.print(F("|PF:"));
-    Serial.print(currentPBSFlowRate_mLmin);
-    Serial.print(F("|D1:"));
-    Serial.print(delayC1_ms);
-    Serial.print(F("|D2:"));
-    Serial.println(delayC2_ms);
+    Serial.println(currentPBSFlowRate_mLmin);
 
     // Add small delay to let serial buffer clear
     delay(100);

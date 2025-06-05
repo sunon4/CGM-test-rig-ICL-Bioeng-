@@ -15,25 +15,14 @@ let glucosePreviewData = timeSteps.map(t => [t, 15]); // Default to 15 mM
 // Initialize Chart.js
 let chart;
 
-// Calculate volumetric flow rate
-function calculateFlowRate(rpm) {
-    return 0.0592 * rpm - 0.1269;
-}
-
-// Calculate combined glucose concentration
-function calculateCombinedGlucose(pump1Rpm, pump1Glucose, pump2Rpm, pump2Glucose) {
-    const flowRate1 = calculateFlowRate(pump1Rpm);
-    const flowRate2 = calculateFlowRate(pump2Rpm);
-    const totalFlowRate = flowRate1 + flowRate2;
-
-    if (totalFlowRate <= 0) {
+// Calculate combined glucose concentration using ratios
+function calculateCombinedGlucose(ratio1, glucose1, glucose2) {
+    if (ratio1 < 0 || ratio1 > 1) {
         return 0;
     }
 
-    const combinedGlucose = (
-        (pump1Glucose * flowRate1 + pump2Glucose * flowRate2) / totalFlowRate
-    );
-
+    const ratio2 = 1 - ratio1;
+    const combinedGlucose = (glucose1 * ratio1 + glucose2 * ratio2);
     return Number(combinedGlucose.toFixed(2));
 }
 
@@ -112,17 +101,17 @@ function setupManualControl() {
     
     if (updatePumpsBtn) {
         updatePumpsBtn.addEventListener('click', () => {
-            const pump1Rpm = parseFloat(document.getElementById('pump1-rpm').value) || 0;
-            const pump1Direction = document.getElementById('pump1-direction').value;
+            const ratio1 = parseFloat(document.getElementById('pump1-ratio').value) || 0;
             const pump1Glucose = parseFloat(document.getElementById('pump1-glucose').value) || 15;
-            const pump2Rpm = parseFloat(document.getElementById('pump2-rpm').value) || 0;
-            const pump2Direction = document.getElementById('pump2-direction').value;
             const pump2Glucose = parseFloat(document.getElementById('pump2-glucose').value) || 15;
 
-            // Calculate flow rates and combined glucose
-            const flowRate1 = calculateFlowRate(pump1Rpm);
-            const flowRate2 = calculateFlowRate(pump2Rpm);
-            const combinedGlucose = calculateCombinedGlucose(pump1Rpm, pump1Glucose, pump2Rpm, pump2Glucose);
+            if (ratio1 < 0 || ratio1 > 1) {
+                updateStatus('Ratio must be between 0 and 1', true);
+                return;
+            }
+
+            // Calculate combined glucose using ratios
+            const combinedGlucose = calculateCombinedGlucose(ratio1, pump1Glucose, pump2Glucose);
 
             // Create constant concentration profile
             const newData = timeSteps.map(t => [t, combinedGlucose]);
@@ -255,9 +244,10 @@ function switchTab(tabId) {
 // Backend communication configuration
 const BACKEND_URL = 'http://localhost:8000'; // Change this to your machine's IP address
 
-// Function to send data to backend
+// Function to send data to backend and simulate
 async function sendDataToBackend(data) {
     try {
+        // First send to Arduino
         const response = await fetch(`${BACKEND_URL}/send-data`, {
             method: 'POST',
             headers: {
@@ -270,10 +260,16 @@ async function sendDataToBackend(data) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        // Open simulation in new window with the data
+        const simulationUrl = `${BACKEND_URL}/simulate?data=${encodeURIComponent(JSON.stringify(data))}`;
+        window.open(simulationUrl, '_blank', 'width=800,height=600');
+
         const result = await response.json();
-        return result;
+        return {
+            arduino: result
+        };
     } catch (error) {
-        console.error('Error sending data to backend:', error);
+        console.error('Error:', error);
         throw error;
     }
 }
@@ -302,8 +298,35 @@ function init() {
     setupSimulator();
     setupCSVUpload();
 
-    // Set up start process button
+    // Create simulate button
     const startProcessBtn = document.getElementById('start-process');
+    const simulateBtn = document.createElement('button');
+    simulateBtn.textContent = 'Simulate Only';
+    simulateBtn.style.marginLeft = '10px';
+    startProcessBtn.parentNode.insertBefore(simulateBtn, startProcessBtn.nextSibling);
+
+    // Set up manual control ratio sync
+    const pump1RatioInput = document.getElementById('pump1-ratio');
+    const pump2RatioSpan = document.getElementById('pump2-ratio');
+    
+    pump1RatioInput.addEventListener('input', () => {
+        const ratio1 = Number(pump1RatioInput.value);
+        if (ratio1 >= 0 && ratio1 <= 1) {
+            pump2RatioSpan.textContent = (1 - ratio1).toFixed(1);
+        }
+    });
+
+    // Set up simulate button
+    simulateBtn.addEventListener('click', () => {
+        if (!glucosePreviewData || glucosePreviewData.length !== 13) {
+            updateStatus('Please configure a valid glucose concentration profile first', true);
+            return;
+        }
+        const simulationUrl = `${BACKEND_URL}/simulate?data=${encodeURIComponent(JSON.stringify(glucosePreviewData))}`;
+        window.open(simulationUrl, '_blank', 'width=800,height=600');
+    });
+
+    // Set up start process button
     startProcessBtn.addEventListener('click', async () => {
         try {
             if (!glucosePreviewData || glucosePreviewData.length !== 13) {
@@ -313,8 +336,9 @@ function init() {
             startProcessBtn.disabled = true;
             updateStatus('Sending data to machine...');
 
-            await sendDataToBackend(glucosePreviewData);
+            const results = await sendDataToBackend(glucosePreviewData);
             updateStatus('Process started successfully!');
+            
         } catch (error) {
             updateStatus(`Error: ${error.message}`, true);
         } finally {

@@ -23,11 +23,32 @@ header {
     background-color: #2c3e50;
     color: white;
     padding: 1rem;
-    text-align: center;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cgm-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #3498db;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.cgm-link:hover {
+    background-color: #2980b9;
 }
 
 header h1 {
-    margin-bottom: 10px;
+    margin: 0;
 }
 
 nav ul {
@@ -439,4 +460,15 @@ footer {
 #status-message.success {
     background-color: #e8f5e9;
     color: #2e7d32;
+}
+
+.pump2-ratio {
+    background-color: #f5f5f5;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.pump2-ratio span {
+    font-weight: bold;
+    color: #2c3e50;
 }
