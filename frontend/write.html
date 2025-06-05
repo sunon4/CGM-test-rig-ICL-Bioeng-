@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pump Control System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Pump Control System</h1>
+    </header>
+
+    <main>
+        <div class="container write-container">
+            <h2>Glucose Concentration Profile</h2>
+            
+            <div class="content-wrapper">
+                <div class="left-panel">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="manual">Manual Control</button>
+                        <button class="tab-btn" data-tab="simulator">Simulator</button>
+                        <button class="tab-btn" data-tab="upload">CSV Upload</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="manual-tab">
+                            <div class="method-content">
+                                <div class="manual-controls">
+                                    <div class="pump-blocks-container">
+                                        <div class="pump-block">
+                                            <h4>Pump 1</h4>
+                                            <div class="input-group">
+                                                <label for="pump1-rpm">RPM:</label>
+                                                <input type="number" id="pump1-rpm" min="0" max="150" step="1" value="0">
+                                            </div>
+                                            <div class="input-group">
+                                                <label for="pump1-direction">Direction:</label>
+                                                <select id="pump1-direction">
+                                                    <option value="clockwise">Clockwise</option>
+                                                    <option value="counterclockwise">Counter-clockwise</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group">
+                                                <label for="pump1-glucose">Glucose Concentration (mM):</label>
+                                                <input type="number" id="pump1-glucose" min="10" max="20" step="0.1" value="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="pump-block">
+                                            <h4>Pump 2</h4>
+                                            <div class="input-group">
+                                                <label for="pump2-rpm">RPM:</label>
+                                                <input type="number" id="pump2-rpm" min="0" max="150" step="1" value="0">
+                                            </div>
+                                            <div class="input-group">
+                                                <label for="pump2-direction">Direction:</label>
+                                                <select id="pump2-direction">
+                                                    <option value="clockwise">Clockwise</option>
+                                                    <option value="counterclockwise">Counter-clockwise</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group">
+                                                <label for="pump2-glucose">Glucose Concentration (mM):</label>
+                                                <input type="number" id="pump2-glucose" min="10" max="20" step="0.1" value="15">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button id="update-pumps" class="action-btn">Update Pump Settings</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="simulator-tab">
+                            <div class="method-content">
+                                <div class="simulator-controls">
+                                    <div class="input-group">
+                                        <label for="base-glucose">Base Glucose Level (mM):</label>
+                                        <input type="number" id="base-glucose" value="15" min="10" max="20" step="0.1">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="variation-type">Variation Pattern:</label>
+                                        <select id="variation-type">
+                                            <option value="square">Square Wave</option>
+                                            <option value="sine">Sinusoidal</option>
+                                            <option value="random">Random</option>
+                                            <option value="meal">Meal Response</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="variation-amplitude">Amplitude (mM):</label>
+                                        <input type="number" id="variation-amplitude" value="3" min="0" max="5" step="0.1">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="reading-interval">Reading Interval (minutes):</label>
+                                        <select id="reading-interval">
+                                            <option value="5">5 minutes</option>
+                                            <option value="10">10 minutes</option>
+                                            <option value="15">15 minutes</option>
+                                        </select>
+                                    </div>
+                                    <button id="apply-simulation" class="action-btn">Apply Simulation</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="upload-tab">
+                            <div class="method-content">
+                                <div class="upload-controls">
+                                    <div class="file-upload">
+                                        <label for="csv-file">Upload CSV File (13×2 format):</label>
+                                        <input type="file" id="csv-file" accept=".csv">
+                                        <p class="file-info">Format: 13 rows, 2 columns (time, concentration)</p>
+                                        <p class="file-info">Time: 0-60 minutes, 5-minute steps</p>
+                                        <p class="file-info">Concentration: 10-20 mM</p>
+                                    </div>
+                                    <div class="csv-data-container">
+                                        <h4>CSV Data Preview</h4>
+                                        <div class="csv-table-wrapper">
+                                            <table id="csv-data-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Time (min)</th>
+                                                        <th>Concentration (mM)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Data will be populated by JavaScript -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <button id="apply-csv-data" class="action-btn" disabled>Apply CSV Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-panel">
+                    <div class="preview-container">
+                        <h3>Input Glucose Concentration</h3>
+                        <div class="chart-container">
+                            <canvas id="previewChart"></canvas>
+                        </div>
+                        <div class="process-controls">
+                            <button id="start-process" class="action-btn">Start Process</button>
+                            <div id="status-message"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Pump Control System</p>
+    </footer>
+    
+    <script src="js/write.js"></script>
+</body>
+</html> 

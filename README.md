@@ -1,78 +1,73 @@
-# Peristaltic Pump Control System
+# Pump Control System
 
-A distributed system for controlling peristaltic pumps with a web interface, designed for both development and Raspberry Pi deployment.
+This system consists of a web-based frontend interface and a backend server that communicates with an Arduino via serial connection.
 
-## Architecture Overview
+## System Architecture
 
-- **Microcontroller Layer**: Arduino Uno/Nano with A4988 stepper drivers
-- **Serial Bridge**: Python service for Arduino communication
-- **Message Bus**: MQTT for decoupled communication
-- **API Gateway**: FastAPI for REST + WebSocket endpoints
-- **Frontend**: React-based web interface
-- **Security**: Caddy 2 reverse proxy with automatic TLS
+- **Frontend**: Web interface running on user's device (phone/laptop)
+- **Backend**: FastAPI server running on a machine connected to Arduino
+- **Arduino**: Connected to the backend machine via USB
 
-## Directory Structure
+## Setup Instructions
 
-```
-.
-├── arduino/           # Arduino firmware
-├── bridge/           # Python serial bridge service
-├── api/              # FastAPI backend service
-├── frontend/         # React frontend
-├── docker/           # Docker and deployment configs
-└── docs/            # Documentation
+### Frontend Setup
+
+1. Host the frontend files on a web server or use a local development server:
+```bash
+# Using Python's built-in HTTP server
+cd frontend
+python -m http.server 8080
 ```
 
-## Development Setup
+2. Access the frontend at `http://localhost:8080/write.html`
 
-1. Install dependencies:
-   - Arduino IDE
-   - Python 3.9+
-   - Node.js 16+
-   - Docker & Docker Compose
+3. Update the `BACKEND_URL` in `frontend/js/write.js` to match your backend machine's IP address
 
-2. Configure environment:
-   ```bash
-   # Clone repository
-   git clone [repository-url]
-   cd pump-control-system
+### Backend Setup
 
-   # Set up Python virtual environment
-   python -m venv venv
-   source venv/bin/activate  # or `venv\Scripts\activate` on Windows
-   pip install -r requirements.txt
+1. Install Python dependencies:
+```bash
+cd backend
+pip install -r requirements.txt
+```
 
-   # Install frontend dependencies
-   cd frontend
-   npm install
-   ```
+2. Start the FastAPI server:
+```bash
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
 
-3. Start development servers:
-   ```bash
-   # Terminal 1: Start MQTT broker
-   docker-compose up mosquitto
+3. Ensure Arduino is connected via USB and the correct port is set in `main.py` (`SERIAL_PORT`)
 
-   # Terminal 2: Start API server
-   cd api
-   uvicorn main:app --reload
+## Usage
 
-   # Terminal 3: Start frontend
-   cd frontend
-   npm run dev
-   ```
+1. Use the frontend interface to configure the glucose concentration profile:
+   - Manual Control: Set pump parameters
+   - Simulator: Generate patterns
+   - CSV Upload: Upload custom profile
 
-## Production Deployment
+2. Click "Start Process" to send the profile to the Arduino
 
-1. Build Docker images:
-   ```bash
-   docker-compose build
-   ```
+3. The system will:
+   - Send the 13x2 array to the backend
+   - Format data for Arduino (`time:concentration` pairs)
+   - Transmit via serial connection
 
-2. Start services:
-   ```bash
-   docker-compose up -d
-   ```
+## Data Format
 
-## License
+- Frontend to Backend: JSON array of [time, concentration] pairs
+- Backend to Arduino: String format "time1:conc1,time2:conc2,...\n"
 
-MIT License 
+## Troubleshooting
+
+1. CORS Issues:
+   - Ensure backend CORS settings allow your frontend origin
+   - Check browser console for CORS errors
+
+2. Serial Connection:
+   - Verify correct port in `main.py`
+   - Check Arduino connection
+   - Ensure proper permissions for serial port access
+
+3. Data Format:
+   - Verify 13 time points (0-60 minutes, 5-minute steps)
+   - Concentration values between 10-20 mM 
